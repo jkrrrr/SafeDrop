@@ -70,7 +70,6 @@ public class PlayerJoinQuit implements Listener {
         dataManager.getConfig().getBoolean("database-settings.enabled") &&
             plugin.getDatabaseManager().getDataSource().getConnection() != null
     ) {
-      System.out.println("Database is enabled and connected");
       User user = new User(
           event.getPlayer().getUniqueId(),
           dropManager.getStatus(event.getPlayer().getUniqueId())
