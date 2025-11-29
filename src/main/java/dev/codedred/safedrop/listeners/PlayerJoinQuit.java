@@ -65,6 +65,20 @@ public class PlayerJoinQuit implements Listener {
     DataManager dataManager = DataManager.getInstance();
     DropManager dropManager = DropManager.getInstance();
 
+    // If database is enabled and available, update it
+    if (
+        dataManager.getConfig().getBoolean("database-settings.enabled") &&
+            plugin.getDatabaseManager().getDataSource().getConnection() != null
+    ) {
+      System.out.println("Database is enabled and connected");
+      User user = new User(
+          event.getPlayer().getUniqueId(),
+          dropManager.getStatus(event.getPlayer().getUniqueId())
+      );
+      plugin.getDatabaseManager().getUsersTable().update(user);
+    }
+
+    // If database is disabled, or unavailable, update local
     if (
       !dataManager.getConfig().getBoolean("database-settings.enabled") ||
       (
